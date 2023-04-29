@@ -1,0 +1,54 @@
+body {
+  font-family: 'Raleway', sans-serif;
+    background-color: #7DB9B6;
+    color: #fff;
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+    background: url("following-the-power-lines-4k-iw.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgb(0, 0, 0);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+h1 {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  color: #191825;
+}
+div{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 60px;
+  color: #191825;
+  border-radius: 5px;
+  background-color: #18122bec;
+  color: #FEFBE9;
+}
+input[type="button"] {
+  font-size: 20px;
+  margin: 20px auto;
+  display: block;
+  text-decoration: none;
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background: none;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  transition: transform 0.2s ease-in-out;
+}
+
+input[type="button"]:hover {
+  text-decoration: none;
+  transform: scale(1.1);
+}
