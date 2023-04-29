@@ -253,10 +253,10 @@ else if(document.getElementById("numConductors").value ==6){
   document.getElementById("D22").innerHTML = D2;
   document.getElementById("sendingEndCurrent").innerHTML = Is;
   document.getElementById("sendingEndCurrentangle").innerHTML = Is_angle;
-  document.getElementById("sendingEndVoltage").innerHTML = Vs;
+  document.getElementById("sendingEndVoltage").innerHTML = Vs/1000;
   document.getElementById("sendingEndVoltageangle").innerHTML = Vs_angle;
   document.getElementById("voltageRegulation").innerHTML = voltageRegulation;
-  document.getElementById("poloss").innerHTML = Ploss;
+  document.getElementById("poloss").innerHTML = Ploss/1000000;
   document.getElementById("eff").innerHTML = efficiency;
 
 
