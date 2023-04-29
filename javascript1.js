@@ -256,7 +256,7 @@ else if(document.getElementById("numConductors").value ==6){
   document.getElementById("sendingEndVoltage").innerHTML = Vs/1000;
   document.getElementById("sendingEndVoltageangle").innerHTML = Vs_angle;
   document.getElementById("voltageRegulation").innerHTML = voltageRegulation;
-  document.getElementById("poloss").innerHTML = Ploss/1000000;
+  document.getElementById("poloss").innerHTML = Ploss/10000000;
   document.getElementById("eff").innerHTML = efficiency;
 
 
