@@ -187,9 +187,8 @@ else if(parseFloat(document.getElementById("numConductors").value) ==6){
   var Ichr = Vr*1000*2*pi*freq*capacitance*lengthOfLine;
   var Irvalue = (receivingEndLoad * 1000000) / (Math.sqrt(3) * receivingEndVoltage * pf * 1000);
   const Ir = roundToDecimal(Irvalue,5);
-  console.log(Ir) 
   var Ir_angle = -(180 * Math.acos(pf)) / pi;
-  var Ir1 = Ir * pf, Ir2 = Ir * Math.sin(-Math.acos(pf));
+  var Ir1 = Ir * pf, Ir2 = -Ir * Math.sin(Math.acos(pf));
   if (modelofline[0].checked) {
     var A1 = 1, A2 = 0, C1 = 0, C2 = 0, D1 = 1, D2 = 0;
     var B1 = R, B2 = (XL);
@@ -228,16 +227,15 @@ else if(parseFloat(document.getElementById("numConductors").value) ==6){
     // var Pin = 3*Vs*Is*Math.cos(Vs_angle - Ir_angle);
     // console.log(Pin);
     var Ploss = R*(P1*P1 + P2*P2);
-    var Pin = (Ploss + (receivingEndLoad*1000000));
+    var Pin = (3*Ploss + (receivingEndLoad*1000000));
   }
+  console.log(Ir_angle) 
+  console.log(Ir1)
+  console.log(Ir2)
   console.log(Pin);
   console.log(Vs1)
   console.log(Vs2);
-  console.log(A2);
-  console.log(B1);
-  console.log(B2);  
-  console.log(C1);
-  console.log(C2);
+  console.log(Vs_angle);
   var voltageRegulation = (((Vs/Math.sqrt(A1*A1 + A2*A2)) - Vr*1000)/(Vr*1000))*100;
   var efficiency = ((receivingEndLoad * 1000000) / (Pin)) * 100;
   // Set output values
@@ -296,7 +294,7 @@ function downloadResults() {
   const D11 = document.getElementById("D11").textContent;
   const D22 = document.getElementById("D22").textContent;
   // Combine the result values into a single string
-  const resultString = `Inductance: ${inductance} H/km\nCapacitance: ${capacitance} F/km\nInductive Reactance: ${inductiveReactance} ohm\nCapacitive Reactance: ${capacitiveReactance} ohm\nCharging Current drawn from the sending end substation: ${chargingcurrent} A\nThe ABCD Parameters:\nA = ${A11}+j${A22}\nB = ${B11}+j${B22}\nC = ${C11}+j${C22}\nD = ${D11}+j${D22}\nSending End Voltage: ${sendingEndVoltage} ${sendingEndVoltageangle} V\nSending End Current: ${sendingEndCurrent} ${sendingEndCurrentangle} A\nVoltage Regulation: ${voltageRegulation}\nPower Loss: ${powerloss} W\nTransmission Efficiency: ${efficiency} %`;
+  const resultString = `Inductance: ${inductance} H/km\nCapacitance: ${capacitance} F/km\nInductive Reactance: ${inductiveReactance} ohm\nCapacitive Reactance: ${capacitiveReactance} ohm\nCharging Current drawn from the sending end substation: ${chargingcurrent} A\nThe ABCD Parameters:\nA = ${A11}+j${A22}\nB = ${B11}+j${B22}\nC = ${C11}+j${C22}\nD = ${D11}+j${D22}\nSending End Voltage: ${sendingEndVoltage} Angle: ${sendingEndVoltageangle} V\nSending End Current: ${sendingEndCurrent} Angle: ${sendingEndCurrentangle} A\nVoltage Regulation: ${voltageRegulation}\nPower Loss: ${powerloss} W\nTransmission Efficiency: ${efficiency} %`;
 
   // Create a new blob object with the result string as the content
   const blob = new Blob([resultString], { type: "text/plain;charset=utf-8" });
