@@ -110,15 +110,15 @@ function calculateValues(event) {
   // Get user inputs
   var typeOfSystem = document.getElementsByName('type_of_system');
   // var numberOfConductors = document.getElementById("numberOfConductorsperbundle").value;
-  var numberOfStrands = document.getElementById("numberOfStrands").value;
-  var d = document.getElementById("diameterOfEachStrand").value;
-  var lengthOfLine = document.getElementById("lengthOfLine").value;
+  var numberOfStrands = parseFloat(document.getElementById("numberOfStrands").value);
+  var d = parseFloat(document.getElementById("diameterOfEachStrand").value);
+  var lengthOfLine = parseFloat(document.getElementById("lengthOfLine").value);
   var modelofline = document.getElementsByName('model_of_line');
-  var Resistance = document.getElementById("resistanceOfLine").value;
-  var freq = document.getElementById("powerFrequency").value;
-  var receivingEndVoltage = document.getElementById("nominalSystemVoltage").value;
-  var receivingEndLoad = document.getElementById("receivingEndLoad").value;
-  var pf = document.getElementById("powerFactor").value;
+  var Resistance = parseFloat(document.getElementById("resistanceOfLine").value);
+  var freq = parseFloat(document.getElementById("powerFrequency").value);
+  var receivingEndVoltage = parseFloat(document.getElementById("nominalSystemVoltage").value);
+  var receivingEndLoad = parseFloat(document.getElementById("receivingEndLoad").value);
+  var pf = parseFloat(document.getElementById("powerFactor").value);
 
   //Calculate values
   var pi = 3.141592654;
@@ -132,32 +132,32 @@ function calculateValues(event) {
 
 
 //Number of Conductors
-if(document.getElementById("numConductors").value ==1){
+if(parseFloat(document.getElementById("numConductors").value) ==1){
   var Q = r*0.7788;
   var sgmd = Math.pow(Q,1);
   var sgmd1 = Math.pow(Q/0.7788,1);
 }
-else if(document.getElementById("numConductors").value ==2){
+else if(parseFloat(document.getElementById("numConductors").value) ==2){
   var Q = r*0.7788*d;
   var sgmd = Math.pow(Q*Q,1/4);
   var sgmd1 = Math.pow(Q*Q/(0.7788*0.7788),1/4);
 }
-else if(document.getElementById("numConductors").value ==3){
+else if(parseFloat(document.getElementById("numConductors").value) ==3){
   var Q = r*0.7788*d*d;
   var sgmd = Math.pow(Q*Q*Q,1/9);
   var sgmd1 = Math.pow(Q*Q*Q/(Math.pow(0.7788,3)),1/9);
 }
-else if(document.getElementById("numConductors").value ==4){
+else if(parseFloat(document.getElementById("numConductors").value) ==4){
   var Q = r*0.7788*d*d*d*Math.pow(2,1/2);
   var sgmd = Math.pow(Q*Q*Q*Q,1/16);
   var sgmd1 = Math.pow(Q*Q*Q*Q/(Math.pow(0.7788,4)),1/16);
 }
-else if(document.getElementById("numConductors").value ==5){
+else if(parseFloat(document.getElementById("numConductors").value) ==5){
   var Q = r*0.7788*d*d*(2*d*0.5878*2*d*0.5878);
   var sgmd = Math.pow(Q*Q*Q*Q*Q,1/25);
   var sgmd1 = Math.pow(Q*Q*Q*Q*Q/(Math.pow(0.7788,5)),1/25);
 }
-else if(document.getElementById("numConductors").value ==6){
+else if(parseFloat(document.getElementById("numConductors").value) ==6){
   var x = Math.sqrt((d*Math.pow(3,1/2)/2)*(d*Math.pow(3,1/2)/2) + d*d)
   var Q = r*0.7788*d*d*x*x*((d*Math.pow(3,1/2) + d));
   var sgmd = Math.pow(Q*Q*Q*Q*Q*Q,1/36);
@@ -171,9 +171,9 @@ else if(document.getElementById("numConductors").value ==6){
     var capacitance = (2 * esi * pi * Math.pow(10, 3)) / (Math.log(G / (sgmd1)));
   }
   else if (typeOfSystem[1].checked) {
-    distanceAB = document.getElementById("distanceAB").value;
-    distanceBC = document.getElementById("distanceBC").value;
-    distanceCA = document.getElementById("distanceCA").value;
+    distanceAB = parseFloat(document.getElementById("distanceAB").value);
+    distanceBC = parseFloat(document.getElementById("distanceBC").value);
+    distanceCA = parseFloat(document.getElementById("distanceCA").value);
     const G = Math.pow((distanceAB * distanceBC * distanceCA), 1 / 3);
     var inductance = 2 * (Math.pow(10, -4)) * (Math.log(G / (sgmd)));
     var capacitance = (2 * esi * pi * Math.pow(10, 3)) / (Math.log(G / (sgmd1)));
@@ -202,8 +202,8 @@ else if(document.getElementById("numConductors").value ==6){
     var Is1 = Ir1, Is2 = Ir2;
     var Is = Math.sqrt(Is1*Is1 + Is2*Is2);
     var Is_angle = 180*Math.atan(Is2 / Is1)/pi;
-    var Pin = 3*Vs*Is*Math.cos(Vs_angle - Ir_angle);
-    var Ploss = Pin - receivingEndLoad;
+    var Ploss = Is*Is*R;
+    var Pin = 3*Ploss + receivingEndLoad*1000000;
   }
   else if (modelofline[1].checked) {
     var A1a = 1 - ((XL*Y)/2), D1 = 1 - ((XL*Y)/2);
@@ -224,10 +224,13 @@ else if(document.getElementById("numConductors").value ==6){
     var Is2 = C2*Vr + A1*Ir2 - A2*Ir1;
     var Is = Math.sqrt(Is1*Is1 + Is2*Is2);
     var Is_angle = 180*Math.atan(Is2/Is1)/pi;
-    // var P1 = Ir1 + ((Y*XL*R)/(z)) , P2 = Ir2 - ((Y*R*R*Vr)/z);
-    var Pin = 3*Vs*Is*Math.cos(Vs_angle - Ir_angle);
-    var Ploss = Pin - receivingEndLoad*1000000;
+    var P1 = Ir1 + ((Y*XL*R)/(z)) , P2 = Ir2 - ((Y*R*R*Vr)/z);
+    // var Pin = 3*Vs*Is*Math.cos(Vs_angle - Ir_angle);
+    // console.log(Pin);
+    var Ploss = R*(P1*P1 + P2*P2);
+    var Pin = (Ploss + (receivingEndLoad*1000000));
   }
+  console.log(Pin);
   console.log(Vs1)
   console.log(Vs2);
   console.log(A2);
@@ -236,7 +239,7 @@ else if(document.getElementById("numConductors").value ==6){
   console.log(C1);
   console.log(C2);
   var voltageRegulation = (((Vs/Math.sqrt(A1*A1 + A2*A2)) - Vr*1000)/(Vr*1000))*100;
-  var efficiency = (receivingEndLoad * 1000000) / (Pin) * 100;
+  var efficiency = ((receivingEndLoad * 1000000) / (Pin)) * 100;
   // Set output values
   document.getElementById("inductance").innerHTML = inductance;
   document.getElementById("capacitance").innerHTML = capacitance;
@@ -293,7 +296,7 @@ function downloadResults() {
   const D11 = document.getElementById("D11").textContent;
   const D22 = document.getElementById("D22").textContent;
   // Combine the result values into a single string
-  const resultString = `Inductance: ${inductance} H/km\nCapacitance: ${capacitance} F/km\nInductive Reactance: ${inductiveReactance} ohm\nCapacitive Reactance: ${capacitiveReactance} ohm\nCharging Current drawn from the sending end substation: ${chargingcurrent} A\nThe ABCD Parameters:\nA = ${A11}+j${A22}\nB = ${B11}+j${B22}\nC = ${C11}+j${C22}\nD = ${D11}+j${D22}\nSending End Voltage: ${sendingEndVoltage}&angle;${sendingEndVoltageangle} V\nSending End Current: ${sendingEndCurrent}&angle; ${sendingEndCurrentangle} A\nVoltage Regulation: ${voltageRegulation}\nPower Loss: ${powerloss} W\nTransmission Efficiency: ${efficiency} %`;
+  const resultString = `Inductance: ${inductance} H/km\nCapacitance: ${capacitance} F/km\nInductive Reactance: ${inductiveReactance} ohm\nCapacitive Reactance: ${capacitiveReactance} ohm\nCharging Current drawn from the sending end substation: ${chargingcurrent} A\nThe ABCD Parameters:\nA = ${A11}+j${A22}\nB = ${B11}+j${B22}\nC = ${C11}+j${C22}\nD = ${D11}+j${D22}\nSending End Voltage: ${sendingEndVoltage} ${sendingEndVoltageangle} V\nSending End Current: ${sendingEndCurrent} ${sendingEndCurrentangle} A\nVoltage Regulation: ${voltageRegulation}\nPower Loss: ${powerloss} W\nTransmission Efficiency: ${efficiency} %`;
 
   // Create a new blob object with the result string as the content
   const blob = new Blob([resultString], { type: "text/plain;charset=utf-8" });
