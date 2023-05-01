@@ -294,7 +294,7 @@ function downloadResults() {
   const D11 = document.getElementById("D11").textContent;
   const D22 = document.getElementById("D22").textContent;
   // Combine the result values into a single string
-  const resultString = `Inductance: ${inductance} H/km\nCapacitance: ${capacitance} F/km\nInductive Reactance: ${inductiveReactance} ohm\nCapacitive Reactance: ${capacitiveReactance} ohm\nCharging Current drawn from the sending end substation: ${chargingcurrent} A\nThe ABCD Parameters:\nA = ${A11}+j${A22}\nB = ${B11}+j${B22}\nC = ${C11}+j${C22}\nD = ${D11}+j${D22}\nSending End Voltage: ${sendingEndVoltage} Angle: ${sendingEndVoltageangle} V\nSending End Current: ${sendingEndCurrent} Angle: ${sendingEndCurrentangle} A\nVoltage Regulation: ${voltageRegulation}\nPower Loss: ${powerloss} W\nTransmission Efficiency: ${efficiency} %`;
+  const resultString = `Inductance: ${inductance} H/km\nCapacitance: ${capacitance} F/km\nInductive Reactance: ${inductiveReactance} ohm\nCapacitive Reactance: ${capacitiveReactance} ohm\nCharging Current drawn from the sending end substation: ${chargingcurrent} A\nThe ABCD Parameters:\nA = ${A11}+j${A22}\nB = ${B11}+j${B22}\nC = ${C11}+j${C22}\nD = ${D11}+j${D22}\nSending End Voltage: ${sendingEndVoltage} Angle: ${sendingEndVoltageangle} V\nSending End Current: ${sendingEndCurrent} Angle: ${sendingEndCurrentangle} A\nVoltage Regulation: ${voltageRegulation} %\nPower Loss: ${powerloss} W\nTransmission Efficiency: ${efficiency} %`;
 
   // Create a new blob object with the result string as the content
   const blob = new Blob([resultString], { type: "text/plain;charset=utf-8" });
